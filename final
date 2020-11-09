@@ -1,0 +1,209 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+//ATM MACHINE
+
+double moneyAmount;
+double deposit = 0;
+double withdraw = 0;
+int receipt;
+
+//Fast Cash Function and selection
+void fastCash()
+{
+    int selection;
+    printf("CHOOSE FROM THE FOLLOWING (Press 0 to cancel)\n");
+    printf("1 -> $20.00    $40.00 <- 2\n");
+    printf("3 -> $80.00    $100.00 <- 4\n");
+    printf(": ");
+    scanf("%d", &selection);
+    switch(selection)
+    {
+    case 1:
+        if (moneyAmount >= 20.00) {
+            moneyAmount = moneyAmount - 20.00;
+            withdraw += 20;
+            system("cls");
+            printf("Take your money BRRRRRR...\n");
+        }
+        else
+        {
+            system("cls");
+            printf("Sorry you don't have enough!\n");
+            fastCash();
+        }
+        break;
+    case 2:
+        if (moneyAmount >= 40.00) {
+            moneyAmount = moneyAmount - 40.00;
+            withdraw += 40;
+            system("cls");
+            printf("Take your money BRRRRRR...\n");
+        }
+        else
+        {
+            system("cls");
+            printf("Sorry you don't have enough!\n");
+            fastCash();
+        }
+        break;
+    case 3:
+        if (moneyAmount >= 80.00) {
+            moneyAmount = moneyAmount - 80.00;
+            withdraw += 80;
+            system("cls");
+            printf("Take your money BRRRRRR...\n");
+        }
+        else
+        {
+            system("cls");
+            printf("Sorry you don't have enough!\n");
+            fastCash();
+        }
+        break;
+    case 4:
+        if (moneyAmount >= 100.00) {
+            moneyAmount = moneyAmount - 100.00;
+            withdraw += 100;
+            system("cls");
+            printf("Take your money BRRRRRR...\n");
+        }
+        else
+        {
+            system("cls");
+            printf("Sorry you don't have enough!\n");
+            fastCash();
+        }
+        break;
+    default:
+        system("cls");
+        break;
+    }
+    return;
+}
+
+//Function for the calculation and printing of the receipt
+void receipt_calc()
+{
+    switch(receipt)
+        {
+        case 1:
+            break;
+        default:
+            return;
+            break;
+        }
+    double initialBalance, finalBalance, difference;
+    finalBalance = moneyAmount;
+    initialBalance = moneyAmount + withdraw - deposit;
+    difference = finalBalance - initialBalance;
+    printf("VIRTUAL BANK Receipt\n");
+    printf("Initial Balance: $%0.2lf\n", initialBalance);
+    printf("Available Balance: $%0.2lf\n", finalBalance);
+    printf("Account Balance Change from this transaction: $%0.2lf\n", difference);
+    exit(0);
+}
+
+
+//Function for the main selection menu of the ATM
+void menu()
+{
+    system("cls");
+    int selection;
+    double amountWithdraw, amountDeposit;
+    printf("CHOOSE FROM THE FOLLOWING\n");
+    printf("1 -> Fast Cash    Withdraw <- 2\n");
+    printf("3 -> Deposit      Check Balance <- 4\n");
+    printf("5 -> Get Card Back\n");
+    printf("Enter your choice: ");
+    scanf("%d", &selection);
+    system("cls");
+
+    switch(selection)
+    {
+    case 1:
+        fastCash();
+        break;
+    case 2:
+        printf("Enter Withdraw Amount(Enter 0 to cancel): ");
+        scanf("%lf", &amountWithdraw);
+        while (amountWithdraw > moneyAmount) {
+            printf("\nAmount too high for your balance");
+            printf("\nEnter Withdraw Amount(Enter 0 to cancel): ");
+            scanf("%lf", &amountWithdraw);
+            }
+        if (amountWithdraw == 0) {
+            menu();
+        } else {
+            moneyAmount = moneyAmount - amountWithdraw;
+            withdraw = withdraw + amountWithdraw;
+            system("cls");
+            printf("Take your money BRRRRRR...\n");
+        }
+        break;
+    case 3:
+        printf("Enter Deposit Amount: ");
+        scanf("%lf", &amountDeposit);
+        moneyAmount = moneyAmount + amountDeposit;
+        deposit = deposit + amountDeposit;
+        break;
+    case 4:
+        break;
+    case 5:
+        printf("Goodbye!\n");
+        receipt_calc();
+        exit(0);
+        break;
+    default:
+        menu();
+        break;
+    }
+    return;
+}
+
+//Main function
+int main()
+{
+    int pin, selection;
+    srand(time(NULL));
+    moneyAmount = (rand() % 100);
+    printf("WELCOME\n");
+    printf("Please Enter your pin: ");
+    scanf("%d", &pin);
+    int i = 0;
+    while ((pin < 1000 || pin > 9999) && i < 2) {
+        printf("Invalid PIN, please re-enter: ");
+        scanf("%d", &pin);
+        i += 1;
+    }
+    if (i <= 3 && (pin >= 1000 && pin <= 9999)) {
+    }
+    else
+    {
+        printf("Sorry you can't continue, contact your bank for assistance!");
+        exit(0);
+    }
+    system("cls");
+    printf("Would you like a receipt?\n1 for YES  2 for NO: ");
+    scanf("%d", &receipt);
+    menu();
+    while (1 == 1){
+    printf("Your Balance is $%0.2lf", moneyAmount);
+    printf("\n1 -> Another Transaction    Get Card Back <- 2: ");
+    scanf("%d", &selection);
+    switch(selection)
+    {
+    case 1:
+        menu();
+        break;
+    case 2:
+        system("cls");
+        printf("THANK FOR USING OUR VIRTUAL BANK SYSTEM\n");
+        printf("GOODBYE...\n");
+        receipt_calc();
+        return 0;
+    }
+    }
+    return 0;
+}
