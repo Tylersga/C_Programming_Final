@@ -5,8 +5,11 @@
 //ATM MACHINE
 
 double moneyAmount;
+//These variables count up total money withdrew or deposited
+//It makes the receipt function an easy calculation
 double deposit = 0;
 double withdraw = 0;
+///////////////////
 int receipt;
 
 //Fast Cash Function and selection
@@ -18,6 +21,7 @@ void fastCash()
     printf("3 -> $80.00    $100.00 <- 4\n");
     printf(": ");
     scanf("%d", &selection);
+    //Ugly bit
     switch(selection)
     {
     case 1:
@@ -98,10 +102,11 @@ void receipt_calc()
     finalBalance = moneyAmount;
     initialBalance = moneyAmount + withdraw - deposit;
     difference = finalBalance - initialBalance;
-    printf("VIRTUAL BANK Receipt\n");
-    printf("Initial Balance: $%0.2lf\n", initialBalance);
-    printf("Available Balance: $%0.2lf\n", finalBalance);
-    printf("Account Balance Change from this transaction: $%0.2lf\n", difference);
+    printf("\n");
+    printf("~~~~~~~~~~~~~~ VIRTUAL BANK Receipt ~~~~~~~~~~~~~~\n");
+    printf("~~~~~~~~~~~~~ Initial Balance: $%0.2lf ~~~~~~~~~~~~\n", initialBalance);
+    printf("~~~~~~~~~~~~~ Available Balance: $%0.2lf ~~~~~~~~~~\n", finalBalance);
+    printf("~~~~ Balance Change from transaction: $%0.2lf ~~~~~\n", difference);
     exit(0);
 }
 
@@ -128,6 +133,7 @@ void menu()
     case 2:
         printf("Enter Withdraw Amount(Enter 0 to cancel): ");
         scanf("%lf", &amountWithdraw);
+        //loop made so that the user cant repeatedly enter a high number to get more money
         while (amountWithdraw > moneyAmount) {
             printf("\nAmount too high for your balance");
             printf("\nEnter Withdraw Amount(Enter 0 to cancel): ");
@@ -135,7 +141,9 @@ void menu()
             }
         if (amountWithdraw == 0) {
             menu();
-        } else {
+        }
+        else
+        {
             moneyAmount = moneyAmount - amountWithdraw;
             withdraw = withdraw + amountWithdraw;
             system("cls");
@@ -151,7 +159,8 @@ void menu()
     case 4:
         break;
     case 5:
-        printf("Goodbye!\n");
+        printf("THANK FOR USING OUR VIRTUAL BANK SYSTEM\n");
+        printf("GOODBYE...\n");
         receipt_calc();
         exit(0);
         break;
@@ -166,11 +175,13 @@ void menu()
 int main()
 {
     int pin, selection;
+    //Selects a random number between 0 and 100 for the Account Balance
     srand(time(NULL));
     moneyAmount = (rand() % 100);
-    printf("WELCOME\n");
+    printf("-----WELCOME TO VIRTUAL BANK-----\n");
     printf("Please Enter your pin: ");
     scanf("%d", &pin);
+    //Allows a maximum of 3 inputted attempts at a 4 digit long PIN
     int i = 0;
     while ((pin < 1000 || pin > 9999) && i < 2) {
         printf("Invalid PIN, please re-enter: ");
@@ -188,6 +199,7 @@ int main()
     printf("Would you like a receipt?\n1 for YES  2 for NO: ");
     scanf("%d", &receipt);
     menu();
+    //loop to allow as much transactions as the user wants to do
     while (1 == 1){
     printf("Your Balance is $%0.2lf", moneyAmount);
     printf("\n1 -> Another Transaction    Get Card Back <- 2: ");
@@ -205,5 +217,4 @@ int main()
         return 0;
     }
     }
-    return 0;
 }
