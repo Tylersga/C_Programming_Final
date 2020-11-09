@@ -107,7 +107,7 @@ void receipt_calc()
     printf("~~~~~~~~~~~~~ Initial Balance: $%0.2lf ~~~~~~~~~~~~\n", initialBalance);
     printf("~~~~~~~~~~~~~ Available Balance: $%0.2lf ~~~~~~~~~~\n", finalBalance);
     printf("~~~~ Balance Change from transaction: $%0.2lf ~~~~~\n", difference);
-    exit(0);
+    return;
 }
 
 
@@ -162,6 +162,7 @@ void menu()
         printf("THANK FOR USING OUR VIRTUAL BANK SYSTEM\n");
         printf("GOODBYE...\n");
         receipt_calc();
+        sleep(2);
         exit(0);
         break;
     default:
@@ -214,6 +215,7 @@ int main()
         printf("THANK FOR USING OUR VIRTUAL BANK SYSTEM\n");
         printf("GOODBYE...\n");
         receipt_calc();
+        sleep(2);
         return 0;
     }
     }
